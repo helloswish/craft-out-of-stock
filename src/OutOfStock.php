@@ -28,7 +28,6 @@ use craft\commerce\events\LineItemEvent;
 use stenvdb\outofstock\events\LowStockEvent;
 use stenvdb\outofstock\jobs\SendEmailNotification;
 use stenvdb\outofstock\services\OutOfStockService;
-use stenvdb\outofstock\services\OutOfStockService as OutOfStockServiceService;
 
 /**
  * Craft plugins are very much like little applications in and of themselves. We’ve made
@@ -44,9 +43,6 @@ use stenvdb\outofstock\services\OutOfStockService as OutOfStockServiceService;
  * @package   OutOfStock
  * @since     1.0.0
  *
- * @property  OutOfStockServiceService $outOfStockService
- * @property  Settings $settings
- * @method    Settings getSettings()
  */
 class OutOfStock extends Plugin
 {
