@@ -22,9 +22,9 @@ To install the plugin, follow these instructions.
 
 ## Out of Stock Overview
 
-Out of Stock will fire an event when a variant has surpassed a stock threshold point. Out of Stock can send an email for you if enabled in config.
+Out of Stock will fire an event when a variant has surpassed a stock threshold point and send an email if enabled in the configuration.
 
-It will fire a stock warning event on 2 occasions:
+Stock will be checked when:
 * Every time an paid order has been submitted
 * When a variant is saved in the control panel and the stock value was manually updated
 
@@ -42,6 +42,7 @@ use stenvdb\outofstock\services\OutOfStockService;
 
 Event::on(OutOfStockService::class, OutOfStockService::EVENT_VARIANT_LOW_ON_STOCK, function(LowStockEvent $event) {
     // Do something when stock is sold out or critically low
+    // $event->variant contains the variant that's low on stock
 });
 ```
 
