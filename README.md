@@ -25,12 +25,12 @@ To install the plugin, follow these instructions.
 Out of Stock will fire an event when a variant has surpassed a stock threshold point and send an email if enabled in the configuration.
 
 Stock will be checked when:
-* Every time an paid order has been submitted
-* When a variant is saved in the control panel and the stock value was manually updated
+* A paid order has been saved
+* A variant is saved in the control panel and the stock value was manually updated
 
 ## Configuring Out of Stock
 
-Either by copy pasting `config.php` file to 'config/outofstock.php' or through the control panel settings.
+Either by copy pasting `config.php` file to `config/outofstock.php` or through the control panel settings.
 
 ## Using Out of Stock
 
