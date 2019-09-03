@@ -30,7 +30,7 @@ Stock will be checked when:
 
 ## Configuring Out of Stock
 
-Either by copy pasting `config.php` file to `config/outofstock.php` or through the control panel settings.
+Either by copy pasting `config.php` file to `config/out-of-stock.php` or through the control panel settings.
 
 ## Using Out of Stock
 
