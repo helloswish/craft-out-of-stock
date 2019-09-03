@@ -22,8 +22,6 @@ To install the plugin, follow these instructions.
 
 ## Out of Stock Overview
 
--Insert text here-
-
 Out of Stock will fire an event when a variant has surpassed a stock threshold point. Out of Stock can send an email for you if enabled in config.
 
 It will fire a stock warning event on 2 occasions:
@@ -46,12 +44,5 @@ Event::on(OutOfStockService::class, OutOfStockService::EVENT_VARIANT_LOW_ON_STOC
     // Do something when stock is sold out or critically low
 });
 ```
-
-## Out of Stock Roadmap
-
-Some things to do, and ideas for potential features:
-
-* Release it
-* Write documentation
 
 Brought to you by [Sten Van den Bergh](https://stenvdb.be)
