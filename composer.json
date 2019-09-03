@@ -1,0 +1,44 @@
+{
+    "name": "stenvdb/craft-out-of-stock",
+    "description": "Get notified when products are (almost) out of stock.",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "out of stock"
+    ],
+    "support": {
+        "docs": "https://github.com/stenvdb/out-of-stock/blob/master/README.md",
+        "issues": "https://github.com/stenvdb/out-of-stock/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sten Van den Bergh",
+            "homepage": "https://stenvdb.be"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0",
+        "craftcms/commerce": "^2.1.0"
+    },
+    "autoload": {
+        "psr-4": {
+          "stenvdb\\outofstock\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "Out of Stock",
+        "handle": "out-of-stock",
+        "hasCpSettings": true,
+        "hasCpSection": false,
+        "changelogUrl": "https://raw.githubusercontent.com/stenvdb/out-of-stock/master/CHANGELOG.md",
+        "components": {
+            "outOfStockService": "stenvdb\\outofstock\\services\\OutOfStockService"
+        },
+        "class": "stenvdb\\outofstock\\OutOfStock"
+    }
+}

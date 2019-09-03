@@ -1,0 +1,56 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * Out of Stock plugin for Craft CMS 3.x
+ *
+ * Out of Stock Settings.twig
+ *
+ * @author    Sten Van den Bergh
+ * @copyright Copyright (c) 2019 Sten Van den Bergh
+ * @link      https://stenvdb.be
+ * @package   OutOfStock
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("stenvdb\\outofstock\\assetbundles\\outofstock\\OutOfStockAsset") %}
+
+{{ forms.textField({
+    label: 'Recipients',
+    instructions: 'Separate multiple addresses with a comma',
+    id: 'recipients',
+    name: 'recipients',
+    value: settings['recipients']})
+}}
+
+{{ forms.textField({
+    label: 'Stock Threshold',
+    instructions: 'When to send out the notification',
+    id: 'stockThreshold',
+    name: 'stockThreshold',
+    value: settings['stockThreshold']})
+}}
+
+{{ forms.lightswitchField({
+    label: 'Send Email?',
+    id: 'sendEmail',
+    name: 'sendEmail',
+    on: settings['sendEmail']}) 
+}}
+
+{{ forms.textField({
+    label: 'Email Template Path',
+    instructions: 'Path to your email template',
+    id: 'emailTemplatePath',
+    name: 'emailTemplatePath',
+    value: settings['emailTemplatePath']})
+}}
+
+{{ forms.textField({
+    label: 'Email Subject',
+    id: 'emailSubject',
+    name: 'emailSubject',
+    value: settings['emailSubject']})
+}}
