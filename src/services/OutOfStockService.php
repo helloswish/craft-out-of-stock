@@ -99,7 +99,7 @@ class OutOfStockService extends Component
             return false;
         }
         
-        $html = $view->renderTemplate('_emails/shop/lowOnStock', ['variant' => $variant]);
+        $html = $view->renderTemplate($settings->emailTemplatePath, ['variant' => $variant]);
 
         $mail = new Message();
         $mail->setTo($recipient);
