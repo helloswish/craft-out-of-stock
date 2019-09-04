@@ -41,7 +41,7 @@ use stenvdb\outofstock\services\OutOfStockService;
  *
  * @author    Sten Van den Bergh
  * @package   OutOfStock
- * @since     1.0.0
+ * @since     1.0.1
  *
  */
 class OutOfStock extends Plugin
