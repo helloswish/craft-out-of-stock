@@ -76,8 +76,13 @@ class OutOfStockService extends Component
         $originalLanguage = Craft::$app->language;
         $variant = Variant::findOne($variantId);
         $renderVariables = ['variant' => $variant];
+        $emailTemplatePath = ($settings->emailTemplatePath != '') ? $settings->emailTemplatePath : 'out-of-stock/email';
         
-        $view->setTemplateMode(View::TEMPLATE_MODE_SITE);
+        if (strpos($emailTemplatePath, 'out-of-stock/email') !== false) { 
+            $view->setTemplateMode($view::TEMPLATE_MODE_CP);
+        } else {
+            $view->setTemplateMode($view::TEMPLATE_MODE_SITE);
+        }
 
         if (!$variant) {
             $error = Craft::t('out-of-stock', 'Could not find Variant for Out of Stock Notification email.');
@@ -87,7 +92,7 @@ class OutOfStockService extends Component
             return false;
         }
 
-        $templatePath = $view->renderString($settings->emailTemplatePath, $renderVariables);
+        $templatePath = $view->renderString($emailTemplatePath, $renderVariables);
 
         if (!$view->doesTemplateExist($templatePath)) {
             $error = Craft::t('out-of-stock', 'Email template does not exist at “{templatePath}”.', [
@@ -98,8 +103,6 @@ class OutOfStockService extends Component
             $view->setTemplateMode($oldMode);
             return false;
         }
-        
-        $html = $view->renderTemplate($settings->emailTemplatePath, ['variant' => $variant]);
 
         $mail = new Message();
         $mail->setTo($recipient);
