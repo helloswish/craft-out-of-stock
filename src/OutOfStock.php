@@ -11,14 +11,15 @@
 namespace stenvdb\outofstock;
 
 use Craft;
-use yii\base\Event;
+use craft\web\View;
 
+use yii\base\Event;
 use craft\base\Plugin;
 use craft\web\UrlManager;
 use craft\services\Plugins;
 use craft\services\Elements;
-use craft\events\PluginEvent;
 
+use craft\events\PluginEvent;
 use craft\commerce\elements\Order;
 use craft\commerce\elements\Variant;
 use craft\commerce\services\LineItems;
@@ -158,10 +159,12 @@ class OutOfStock extends Plugin
 
         Event::on(OutOfStockService::class, OutOfStockService::EVENT_VARIANT_LOW_ON_STOCK, function(LowStockEvent $event) {
             // Add a job to the queue that will send the mail
-            Craft::$app->queue->push(new SendEmailNotification([
-                'variantId' => $event->variant->id,
-                'email' => $this->settings->recipients
-            ]));
+            if ($this->settings->sendEmail) {
+                Craft::$app->queue->push(new SendEmailNotification([
+                    'variantId' => $event->variant->id,
+                    'email' => $this->settings->recipients
+                ]));
+            }
         });
     }
 
