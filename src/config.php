@@ -24,7 +24,7 @@
 
 return [
 
-    "recipients" => [],
+    "recipients" => '',
     "stockThreshold" => 0,
     "emailTemplatePath" => '',
     "sendEmail" => true,
