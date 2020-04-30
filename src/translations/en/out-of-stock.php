@@ -4,8 +4,8 @@
  *
  * Get notified when products are (almost) out of stock.
  *
- * @link      https://stenvdb.be
- * @copyright Copyright (c) 2019 Sten Van den Bergh
+ * @link      https://swishdigital.co
+ * @copyright Copyright (c) 2020 Swish Digital
  */
 
 /**
@@ -16,9 +16,9 @@
  *
  * http://www.yiiframework.com/doc-2.0/guide-tutorial-i18n.html
  *
- * @author    Sten Van den Bergh
+ * @author    Swish Digital
  * @package   OutOfStock
- * @since     1.0.0
+ * @since     3.0.0
  */
 return [
     'Out of Stock plugin loaded' => 'Out of Stock plugin loaded',

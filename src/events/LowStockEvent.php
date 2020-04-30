@@ -4,16 +4,16 @@
  *
  * Get notified when products are (almost) out of stock.
  *
- * @link      https://stenvdb.be
- * @copyright Copyright (c) 2019 Sten Van den Bergh
+ * @link      https://swishdigital.co
+ * @copyright Copyright (c) 2020 Swish Digital
  */
 
-namespace stenvdb\outofstock\events;
+namespace swishdigital\outofstock\events;
 
 use yii\base\Event;
 
 /**
- * @author    stenvdb
+ * @author    swishdigital
  * @package   OutOfStock
  * @since     1.0.0
  */

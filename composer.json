@@ -1,8 +1,8 @@
 {
-    "name": "stenvdb/craft-out-of-stock",
+    "name": "swishdigital/out-of-stock",
     "description": "Get notified when products are (almost) out of stock.",
     "type": "craft-plugin",
-    "version": "1.0.2",
+    "version": "3.0.0",
     "keywords": [
         "craft",
         "cms",
@@ -11,34 +11,35 @@
         "out of stock"
     ],
     "support": {
-        "docs": "https://github.com/stenvdb/out-of-stock/blob/master/README.md",
-        "issues": "https://github.com/stenvdb/out-of-stock/issues"
+        "docs": "https://github.com/chadcrowell/out-of-stock/blob/master/README.md",
+        "issues": "https://github.com/chadcrowell/out-of-stock/issues"
     },
     "license": "MIT",
     "authors": [
         {
-            "name": "Sten Van den Bergh",
-            "homepage": "https://stenvdb.be"
+            "name": "Swish Digital",
+            "homepage": "https://swishdigital.co"
         }
     ],
     "require": {
         "craftcms/cms": "^3.0.0",
-        "craftcms/commerce": "^2.1.0"
+        "craftcms/commerce": ">=2.1.0"
     },
     "autoload": {
         "psr-4": {
-          "stenvdb\\outofstock\\": "src/"
+          "swishdigital\\outofstock\\": "src/"
         }
     },
     "extra": {
         "name": "Out of Stock",
         "handle": "out-of-stock",
-        "hasCpSettings": true,
-        "hasCpSection": false,
-        "changelogUrl": "https://raw.githubusercontent.com/stenvdb/out-of-stock/master/CHANGELOG.md",
+        "developer": "Swish Digital",
+        "developerUrl": "https://swishdigital.co",
+        "documentationUrl": "https://github.com/chadcrowell/out-of-stock/blob/master/README.md",
+        "changelogUrl": "https://raw.githubusercontent.com/chadcrowell/out-of-stock/master/CHANGELOG.md",
         "components": {
-            "outOfStockService": "stenvdb\\outofstock\\services\\OutOfStockService"
+            "outOfStockService": "swishdigital\\outofstock\\services\\OutOfStockService"
         },
-        "class": "stenvdb\\outofstock\\OutOfStock"
+        "class": "swishdigital\\outofstock\\OutOfStock"
     }
 }

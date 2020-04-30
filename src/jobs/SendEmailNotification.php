@@ -4,19 +4,19 @@
  *
  * Get notified when products are (almost) out of stock.
  *
- * @link      https://stenvdb.be
- * @copyright Copyright (c) 2019 Sten Van den Bergh
+ * @link      https://swishdigital.co
+ * @copyright Copyright (c) 2020 Swish Digital
  */
 
-namespace stenvdb\outofstock\jobs;
+namespace swishdigital\outofstock\jobs;
+
+use swishdigital\outofstock\OutOfStock;
 
 use Craft;
-
 use craft\queue\BaseJob;
-use stenvdb\outofstock\OutOfStock;
 
 /**
- * OutOfStockTask job
+ * SendEmailNotification job
  *
  * Jobs are run in separate process via a Queue of pending jobs. This allows
  * you to spin lengthy processing off into a separate PHP process that does not
@@ -24,10 +24,10 @@ use stenvdb\outofstock\OutOfStock;
  *
  * You can use it like this:
  *
- * use stenvdb\outofstock\jobs\OutOfStockTask as OutOfStockTaskJob;
+ * use swishdigital\outofstock\jobs\SendEmailNotification as SendEmailNotificationJob;
  *
  * $queue = Craft::$app->getQueue();
- * $jobId = $queue->push(new OutOfStockTaskJob([
+ * $jobId = $queue->push(new SendEmailNotificationJob([
  *     'description' => Craft::t('out-of-stock', 'This overrides the default description'),
  *     'someAttribute' => 'someValue',
  * ]));
@@ -41,9 +41,9 @@ use stenvdb\outofstock\OutOfStock;
  *
  * More info: https://github.com/yiisoft/yii2-queue
  *
- * @author    Sten Van den Bergh
+ * @author    Swish Digital
  * @package   OutOfStock
- * @since     1.0.0
+ * @since     3.0.0
  */
 class SendEmailNotification extends BaseJob
 {

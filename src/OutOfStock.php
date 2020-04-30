@@ -4,31 +4,21 @@
  *
  * Get notified when products are (almost) out of stock.
  *
- * @link      https://stenvdb.be
- * @copyright Copyright (c) 2019 Sten Van den Bergh
+ * @link      https://swishdigital.co
+ * @copyright Copyright (c) 2020 Swish Digital
  */
 
-namespace stenvdb\outofstock;
+namespace swishdigital\outofstock;
+
+use swishdigital\outofstock\services\OutOfStockService as OutOfStockServiceService;
+use swishdigital\outofstock\models\Settings;
 
 use Craft;
-use craft\web\View;
+use craft\base\Plugin;
+use craft\services\Plugins;
+use craft\events\PluginEvent;
 
 use yii\base\Event;
-use craft\base\Plugin;
-use craft\web\UrlManager;
-use craft\services\Plugins;
-use craft\services\Elements;
-
-use craft\events\PluginEvent;
-use craft\commerce\elements\Order;
-use craft\commerce\elements\Variant;
-use craft\commerce\services\LineItems;
-use craft\events\RegisterUrlRulesEvent;
-use stenvdb\outofstock\models\Settings;
-use craft\commerce\events\LineItemEvent;
-use stenvdb\outofstock\events\LowStockEvent;
-use stenvdb\outofstock\jobs\SendEmailNotification;
-use stenvdb\outofstock\services\OutOfStockService;
 
 /**
  * Craft plugins are very much like little applications in and of themselves. We’ve made
@@ -38,12 +28,15 @@ use stenvdb\outofstock\services\OutOfStockService;
  * For the purposes of the plugin docs, we’re going to assume that you know PHP and SQL,
  * as well as some semi-advanced concepts like object-oriented programming and PHP namespaces.
  *
- * https://craftcms.com/docs/plugins/introduction
+ * https://docs.craftcms.com/v3/extend/
  *
- * @author    Sten Van den Bergh
+ * @author    Swish Digital
  * @package   OutOfStock
- * @since     1.0.2
+ * @since     3.0.0
  *
+ * @property  OutOfStockServiceService $outOfStockService
+ * @property  Settings $settings
+ * @method    Settings getSettings()
  */
 class OutOfStock extends Plugin
 {
@@ -66,7 +59,21 @@ class OutOfStock extends Plugin
      *
      * @var string
      */
-    public $schemaVersion = '1.0.0';
+    public $schemaVersion = '3.0.0';
+
+    /**
+     * Set to `true` if the plugin should have a settings view in the control panel.
+     *
+     * @var bool
+     */
+    public $hasCpSettings = true;
+
+    /**
+     * Set to `true` if the plugin should have its own section (main nav item) in the control panel.
+     *
+     * @var bool
+     */
+    public $hasCpSection = false;
 
     // Public Methods
     // =========================================================================
@@ -86,24 +93,6 @@ class OutOfStock extends Plugin
     {
         parent::init();
         self::$plugin = $this;
-
-        // Register our site routes
-        Event::on(
-            UrlManager::class,
-            UrlManager::EVENT_REGISTER_SITE_URL_RULES,
-            function (RegisterUrlRulesEvent $event) {
-                $event->rules['siteActionTrigger1'] = 'out-of-stock/default';
-            }
-        );
-
-        // Register our CP routes
-        Event::on(
-            UrlManager::class,
-            UrlManager::EVENT_REGISTER_CP_URL_RULES,
-            function (RegisterUrlRulesEvent $event) {
-                $event->rules['cpActionTrigger1'] = 'out-of-stock/default/do-something';
-            }
-        );
 
         // Do something after we're installed
         Event::on(
@@ -142,30 +131,6 @@ class OutOfStock extends Plugin
             ),
             __METHOD__
         );
-
-        // Listen for manual save of a line item
-        Event::on(Elements::class, Elements::EVENT_BEFORE_SAVE_ELEMENT, function(Event $event) {
-            if ($event->element instanceof Variant) {
-                // Call service
-                $originalVariant = Variant::findOne($event->element->id);
-                OutOfStock::$plugin->outOfStockService->checkVariantStock($event->element, $originalVariant);
-            }
-        });
-
-        // Check after an order has been paid the new stock
-        Event::on(Order::class, Order::EVENT_AFTER_ORDER_PAID, function(Event $event) {
-            OutOfStock::$plugin->outOfStockService->checkStockAfterOrder($event->sender);
-        });
-
-        Event::on(OutOfStockService::class, OutOfStockService::EVENT_VARIANT_LOW_ON_STOCK, function(LowStockEvent $event) {
-            // Add a job to the queue that will send the mail
-            if ($this->settings->sendEmail) {
-                Craft::$app->queue->push(new SendEmailNotification([
-                    'variantId' => $event->variant->id,
-                    'email' => $this->settings->recipients
-                ]));
-            }
-        });
     }
 
     // Protected Methods

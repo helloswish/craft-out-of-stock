@@ -4,20 +4,19 @@
  *
  * Get notified when products are (almost) out of stock.
  *
- * @link      https://stenvdb.be
- * @copyright Copyright (c) 2019 Sten Van den Bergh
+ * @link      https://swishdigital.co
+ * @copyright Copyright (c) 2020 Swish Digital
  */
 
-namespace stenvdb\outofstock\services;
+namespace swishdigital\outofstock\services;
+
+use swishdigital\outofstock\events\LowStockEvent;
+use swishdigital\outofstock\OutOfStock;
+use craft\commerce\elements\Variant;
+use craft\mail\Message;
 
 use Craft;
-
-use craft\web\View;
-use craft\mail\Message;
 use craft\base\Component;
-use stenvdb\outofstock\OutOfStock;
-use craft\commerce\elements\Variant;
-use stenvdb\outofstock\events\LowStockEvent;
 
 /**
  * OutOfStockService Service
@@ -28,12 +27,15 @@ use stenvdb\outofstock\events\LowStockEvent;
  *
  * https://craftcms.com/docs/plugins/services
  *
- * @author    Sten Van den Bergh
+ * @author    Swish Digital
  * @package   OutOfStock
- * @since     1.0.0
+ * @since     3.0.0
  */
 class OutOfStockService extends Component
 {
+    // Public Methods
+    // =========================================================================
+
     /**
      * @event SaveEvent The event that is triggered before a guest entry is saved.
      */
@@ -77,8 +79,8 @@ class OutOfStockService extends Component
         $variant = Variant::findOne($variantId);
         $renderVariables = ['variant' => $variant];
         $emailTemplatePath = ($settings->emailTemplatePath != '') ? $settings->emailTemplatePath : 'out-of-stock/email';
-        
-        if (strpos($emailTemplatePath, 'out-of-stock/email') !== false) { 
+
+        if (strpos($emailTemplatePath, 'out-of-stock/email') !== false) {
             $view->setTemplateMode($view::TEMPLATE_MODE_CP);
         } else {
             $view->setTemplateMode($view::TEMPLATE_MODE_SITE);
@@ -109,8 +111,8 @@ class OutOfStockService extends Component
         $mail->setSubject($settings->emailSubject);
         $mail->setHtmlBody($view->renderTemplate($templatePath, $renderVariables));
 
-         // Try and send it
-         try {
+        // Try and send it
+        try {
             if (!Craft::$app->getMailer()->send($mail)) {
                 $error = Craft::t('out-of-stock', 'Out of Stock email “email” could not be sent');
                 Craft::error($error, __METHOD__);

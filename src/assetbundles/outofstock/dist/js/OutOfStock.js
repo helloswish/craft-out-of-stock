@@ -3,9 +3,9 @@
  *
  * Out of Stock JS
  *
- * @author    Sten Van den Bergh
- * @copyright Copyright (c) 2019 Sten Van den Bergh
- * @link      https://stenvdb.be
+ * @author    Swish Digital
+ * @copyright Copyright (c) 2020 Swish Digital
+ * @link      https://swishdigital.co
  * @package   OutOfStock
- * @since     1.0.0
+ * @since     3.0.0
  */

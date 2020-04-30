@@ -4,11 +4,11 @@
  *
  * Get notified when products are (almost) out of stock.
  *
- * @link      https://stenvdb.be
- * @copyright Copyright (c) 2019 Sten Van den Bergh
+ * @link      https://swishdigital.co
+ * @copyright Copyright (c) 2020 Swish Digital
  */
 
-namespace stenvdb\outofstock\assetbundles\OutOfStock;
+namespace swishdigital\outofstock\assetbundles\outofstock;
 
 use Craft;
 use craft\web\AssetBundle;
@@ -28,9 +28,9 @@ use craft\web\assets\cp\CpAsset;
  *
  * http://www.yiiframework.com/doc-2.0/guide-structure-assets.html
  *
- * @author    Sten Van den Bergh
+ * @author    Swish Digital
  * @package   OutOfStock
- * @since     1.0.0
+ * @since     3.0.0
  */
 class OutOfStockAsset extends AssetBundle
 {
@@ -43,7 +43,7 @@ class OutOfStockAsset extends AssetBundle
     public function init()
     {
         // define the path that your publishable resources live
-        $this->sourcePath = "@stenvdb/outofstock/assetbundles/outofstock/dist";
+        $this->sourcePath = "@swishdigital/outofstock/assetbundles/outofstock/dist";
 
         // define the dependencies
         $this->depends = [

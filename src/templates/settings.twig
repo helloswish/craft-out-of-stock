@@ -5,17 +5,17 @@
  *
  * Out of Stock Settings.twig
  *
- * @author    Sten Van den Bergh
- * @copyright Copyright (c) 2019 Sten Van den Bergh
- * @link      https://stenvdb.be
+ * @author    Swish Digital
+ * @copyright Copyright (c) 2020 Swish Digital
+ * @link      https://swishdigital.co
  * @package   OutOfStock
- * @since     1.0.0
+ * @since     3.0.0
  */
 #}
 
 {% import "_includes/forms" as forms %}
 
-{% do view.registerAssetBundle("stenvdb\\outofstock\\assetbundles\\outofstock\\OutOfStockAsset") %}
+{% do view.registerAssetBundle("swishdigital\\outofstock\\assetbundles\\outofstock\\OutOfStockAsset") %}
 
 {{ forms.textField({
     label: 'Stock Threshold',
@@ -29,7 +29,7 @@
     label: 'Send Email?',
     id: 'sendEmail',
     name: 'sendEmail',
-    on: settings['sendEmail']}) 
+    on: settings['sendEmail']})
 }}
 
 {{ forms.textField({
@@ -54,3 +54,4 @@
     name: 'emailSubject',
     value: settings['emailSubject']})
 }}
+

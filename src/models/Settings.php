@@ -4,13 +4,13 @@
  *
  * Get notified when products are (almost) out of stock.
  *
- * @link      https://stenvdb.be
- * @copyright Copyright (c) 2019 Sten Van den Bergh
+ * @link      https://swishdigital.co
+ * @copyright Copyright (c) 2020 Swish Digital
  */
 
-namespace stenvdb\outofstock\models;
+namespace swishdigital\outofstock\models;
 
-use stenvdb\outofstock\OutOfStock;
+use swishdigital\outofstock\OutOfStock;
 
 use Craft;
 use craft\base\Model;
@@ -25,9 +25,9 @@ use craft\base\Model;
  *
  * https://craftcms.com/docs/plugins/models
  *
- * @author    Sten Van den Bergh
+ * @author    Swish Digital
  * @package   OutOfStock
- * @since     1.0.0
+ * @since     3.0.0
  */
 class Settings extends Model
 {

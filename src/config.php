@@ -4,8 +4,8 @@
  *
  * Get notified when products are (almost) out of stock.
  *
- * @link      https://stenvdb.be
- * @copyright Copyright (c) 2019 Sten Van den Bergh
+ * @link      https://swishdigital.co
+ * @copyright Copyright (c) 2020 Swish Digital
  */
 
 /**
@@ -24,10 +24,7 @@
 
 return [
 
-    "recipients" => '',
-    "stockThreshold" => 0,
-    "emailTemplatePath" => '',
-    "sendEmail" => true,
-    "emailSubject" => "Product is low on stock"
+    // This controls blah blah blah
+    "someAttribute" => true,
 
 ];
