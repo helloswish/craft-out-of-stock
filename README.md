@@ -2,11 +2,9 @@
 
 Get notified when products are (almost) out of stock.
 
-![Screenshot](resources/img/plugin-logo.png)
-
 ## Requirements
 
-This plugin requires Craft CMS 3.0.0-beta.23 or later.
+This plugin requires Craft CMS 3.0.0-beta.23 or later and Commerce 2.1.0 or higher (including Commerce 3).
 
 ## Installation
 
@@ -18,26 +16,10 @@ To install the plugin, follow these instructions.
 
 2. Then tell Composer to load the plugin:
 
-        composer require chadcrowell/out-of-stock
+        composer require swishdigital/out-of-stock
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Out of Stock.
 
 ## Out of Stock Overview
 
--Insert text here-
-
-## Configuring Out of Stock
-
--Insert text here-
-
-## Using Out of Stock
-
--Insert text here-
-
-## Out of Stock Roadmap
-
-Some things to do, and ideas for potential features:
-
-* Release it
-
-Brought to you by [Swish Digital](https://swishdigital.co)
+Brought to you by [Swish Digital](https://swishdigital.co). Made Commerce 3 compatible based on original version by [Sten Van den Bergh](https://github.com/stenvdb/craft-out-of-stock).

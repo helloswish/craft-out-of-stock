@@ -10,15 +10,25 @@
 
 namespace swishdigital\outofstock;
 
-use swishdigital\outofstock\services\OutOfStockService as OutOfStockServiceService;
-use swishdigital\outofstock\models\Settings;
-
 use Craft;
-use craft\base\Plugin;
-use craft\services\Plugins;
-use craft\events\PluginEvent;
+use craft\web\View;
 
 use yii\base\Event;
+use craft\base\Plugin;
+use craft\web\UrlManager;
+use craft\services\Plugins;
+use craft\services\Elements;
+
+use craft\events\PluginEvent;
+use craft\commerce\elements\Order;
+use craft\commerce\elements\Variant;
+use craft\commerce\services\LineItems;
+use craft\events\RegisterUrlRulesEvent;
+use swishdigital\outofstock\models\Settings;
+use craft\commerce\events\LineItemEvent;
+use swishdigital\outofstock\events\LowStockEvent;
+use swishdigital\outofstock\jobs\SendEmailNotification;
+use swishdigital\outofstock\services\OutOfStockService;
 
 /**
  * Craft plugins are very much like little applications in and of themselves. We’ve made
@@ -94,6 +104,24 @@ class OutOfStock extends Plugin
         parent::init();
         self::$plugin = $this;
 
+        // Register our site routes
+        Event::on(
+            UrlManager::class,
+            UrlManager::EVENT_REGISTER_SITE_URL_RULES,
+            function (RegisterUrlRulesEvent $event) {
+                $event->rules['siteActionTrigger1'] = 'out-of-stock/default';
+            }
+        );
+
+        // Register our CP routes
+        Event::on(
+            UrlManager::class,
+            UrlManager::EVENT_REGISTER_CP_URL_RULES,
+            function (RegisterUrlRulesEvent $event) {
+                $event->rules['cpActionTrigger1'] = 'out-of-stock/default/do-something';
+            }
+        );
+
         // Do something after we're installed
         Event::on(
             Plugins::class,
@@ -105,24 +133,24 @@ class OutOfStock extends Plugin
             }
         );
 
-/**
- * Logging in Craft involves using one of the following methods:
- *
- * Craft::trace(): record a message to trace how a piece of code runs. This is mainly for development use.
- * Craft::info(): record a message that conveys some useful information.
- * Craft::warning(): record a warning message that indicates something unexpected has happened.
- * Craft::error(): record a fatal error that should be investigated as soon as possible.
- *
- * Unless `devMode` is on, only Craft::warning() & Craft::error() will log to `craft/storage/logs/web.log`
- *
- * It's recommended that you pass in the magic constant `__METHOD__` as the second parameter, which sets
- * the category to the method (prefixed with the fully qualified class name) where the constant appears.
- *
- * To enable the Yii debug toolbar, go to your user account in the AdminCP and check the
- * [] Show the debug toolbar on the front end & [] Show the debug toolbar on the Control Panel
- *
- * http://www.yiiframework.com/doc-2.0/guide-runtime-logging.html
- */
+        /**
+         * Logging in Craft involves using one of the following methods:
+         *
+         * Craft::trace(): record a message to trace how a piece of code runs. This is mainly for development use.
+         * Craft::info(): record a message that conveys some useful information.
+         * Craft::warning(): record a warning message that indicates something unexpected has happened.
+         * Craft::error(): record a fatal error that should be investigated as soon as possible.
+         *
+         * Unless `devMode` is on, only Craft::warning() & Craft::error() will log to `craft/storage/logs/web.log`
+         *
+         * It's recommended that you pass in the magic constant `__METHOD__` as the second parameter, which sets
+         * the category to the method (prefixed with the fully qualified class name) where the constant appears.
+         *
+         * To enable the Yii debug toolbar, go to your user account in the AdminCP and check the
+         * [] Show the debug toolbar on the front end & [] Show the debug toolbar on the Control Panel
+         *
+         * http://www.yiiframework.com/doc-2.0/guide-runtime-logging.html
+         */
         Craft::info(
             Craft::t(
                 'out-of-stock',
@@ -131,6 +159,30 @@ class OutOfStock extends Plugin
             ),
             __METHOD__
         );
+
+        // Listen for manual save of a line item
+        Event::on(Elements::class, Elements::EVENT_BEFORE_SAVE_ELEMENT, function(Event $event) {
+            if ($event->element instanceof Variant) {
+                // Call service
+                $originalVariant = Variant::findOne($event->element->id);
+                OutOfStock::$plugin->outOfStockService->checkVariantStock($event->element, $originalVariant);
+            }
+        });
+
+        // Check after an order has been paid the new stock
+        Event::on(Order::class, Order::EVENT_AFTER_ORDER_PAID, function(Event $event) {
+            OutOfStock::$plugin->outOfStockService->checkStockAfterOrder($event->sender);
+        });
+
+        Event::on(OutOfStockService::class, OutOfStockService::EVENT_VARIANT_LOW_ON_STOCK, function(LowStockEvent $event) {
+            // Add a job to the queue that will send the mail
+            if ($this->settings->sendEmail) {
+                Craft::$app->queue->push(new SendEmailNotification([
+                    'variantId' => $event->variant->id,
+                    'email' => $this->settings->recipients
+                ]));
+            }
+        });
     }
 
     // Protected Methods

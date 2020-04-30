@@ -10,13 +10,14 @@
 
 namespace swishdigital\outofstock\services;
 
-use swishdigital\outofstock\events\LowStockEvent;
+use Craft;
+
+use craft\web\View;
+use craft\mail\Message;
+use craft\base\Component;
 use swishdigital\outofstock\OutOfStock;
 use craft\commerce\elements\Variant;
-use craft\mail\Message;
-
-use Craft;
-use craft\base\Component;
+use swishdigital\outofstock\events\LowStockEvent;
 
 /**
  * OutOfStockService Service
