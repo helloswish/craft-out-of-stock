@@ -107,6 +107,10 @@ class OutOfStockService extends Component
             return false;
         }
 
+        if(!is_array($recipient)) {
+            $recipient = explode(',',$recipient);
+        }
+
         $mail = new Message();
         $mail->setTo($recipient);
         $mail->setSubject($settings->emailSubject);
