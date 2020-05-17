@@ -18,6 +18,7 @@ use craft\base\Component;
 use swishdigital\outofstock\OutOfStock;
 use craft\commerce\elements\Variant;
 use swishdigital\outofstock\events\LowStockEvent;
+use yii\di\Instance;
 
 /**
  * OutOfStockService Service
@@ -49,9 +50,10 @@ class OutOfStockService extends Component
     {
         $settings = OutOfStock::$plugin->getSettings();
 
-        // Do nothing if it has unlimited stock
-        if ($variant->hasUnlimitedStock) {
-            return;
+        // Do nothing if $variant isn't an instance of a Commerce element, or has unlimited stock checked
+        // (this will keep checks from happening on line items like Verbb Events or Verbb Gift Vouchers)
+        if (!$variant instanceof \craft\commerce\elements\Variant || $variant->hasUnlimitedStock()) {
+                return;
         }
 
         // Check stock and or compare to old stock
