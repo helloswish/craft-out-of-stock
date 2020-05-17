@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/) and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.3.1 - 2020-05-17
+### Updated
+- Hotfix for 3.0.3
+
 ## 3.0.3 - 2020-05-17
 ### Updated
 - Do nothing if $variant isn't an instance of a Commerce element, or has unlimited stock checked. (this will keep checks from happening on line items like Verbb Events or Verbb Gift Vouchers) 

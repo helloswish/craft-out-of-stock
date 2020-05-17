@@ -2,7 +2,7 @@
     "name": "swishdigital/out-of-stock",
     "description": "Get notified when products are (almost) out of stock.",
     "type": "craft-plugin",
-    "version": "3.0.3",
+    "version": "3.0.3.1",
     "keywords": [
         "craft",
         "cms",
