@@ -16,6 +16,7 @@ use craft\web\View;
 use craft\mail\Message;
 use craft\base\Component;
 use swishdigital\outofstock\OutOfStock;
+use craft\commerce\elements\Donation;
 use craft\commerce\elements\Variant;
 use swishdigital\outofstock\events\LowStockEvent;
 use verbb\events\elements\Ticket;
@@ -52,10 +53,11 @@ class OutOfStockService extends Component
     {
         $settings = OutOfStock::$plugin->getSettings();
 
-        // Do nothing if it is a Verbb voucher or event
+        // Do nothing if it is a Verbb voucher or event, or a Commerce donation
         if (
             (Craft::$app->plugins->isPluginInstalled('events') && $variant instanceof Ticket) ||
-            (Craft::$app->plugins->isPluginInstalled('gift-voucher') && $variant instanceof Voucher)
+            (Craft::$app->plugins->isPluginInstalled('gift-voucher') && $variant instanceof Voucher) ||
+            $variant instanceof Donation
         ) {
             return;
         }
